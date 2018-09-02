@@ -8,6 +8,7 @@ class Crawl:
         self.rows = rows
 
     def get_text(self):
+        text_list = {}
         for row in self.rows:
             [url] = row
             resp = requests.get(url)
@@ -19,7 +20,11 @@ class Crawl:
             self.extract_tag(soup, 'style')
 
             text = soup.find('body').get_text()
-            print(re.sub(r"\s+", " ", text))
+            text = ' '.join(text.splitlines())
+            text = re.split(" +", text)
+            text_list[url] = [s for s in text if ('。' in s)]
+
+        return text_list
 
     @staticmethod
     def extract_tag(soup, tag_name):

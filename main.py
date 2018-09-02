@@ -5,4 +5,7 @@ api = GoogleAPI()
 rows = api.get_values()
 
 crawl = Crawl(rows)
-crawl.get_text()
+test_list = crawl.get_text()
+
+
+print(test_list)
