@@ -11,5 +11,6 @@ if __name__ == '__main__':
     text_list = crawl.get_text()
 
     utils = Utils()
-    text_list = utils.to_words(text_list=text_list)
+    text_list = utils.tfidf(text_list=text_list)
+
     print(text_list)

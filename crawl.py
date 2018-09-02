@@ -22,7 +22,12 @@ class Crawl:
             text = soup.find('body').get_text()
             text = ' '.join(text.splitlines())
             text = re.split(" +", text)
-            text_list[url] = ' '.join([s for s in text if ('。' in s)])
+
+            if url not in text_list:
+                text_list[url] = {}
+
+            # text_list[url]['full_text'] = ' '.join([s for s in text if ('。' in s)])
+            text_list[url]['full_text'] = [s for s in text if ('。' in s)]
 
         return text_list
 

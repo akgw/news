@@ -1,4 +1,5 @@
 import MeCab
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 
 class Utils:
@@ -28,10 +29,15 @@ class Utils:
             words.append(info_elems[0][:-3])
         return words
 
-    def to_words(self, text_list):
-        # to_stemは調査必要
+    def to_stem(self, text):
+        return self.split(text=text, to_stem=True)
+
+    def tfidf(self, text_list):
+        # analyzerは文字列を入れると文字列のlistが返る関数
         for url, text in text_list.items():
-            words = self.split(text=text, to_stem=False)
-            text_list[url] = words
+            vectorizer = TfidfVectorizer(
+                analyzer=self.to_stem, min_df=1, max_df=50)
+            tfidf = vectorizer.fit_transform(text["full_text"])
+            text_list[url]['tfidf'] = tfidf
 
         return text_list
