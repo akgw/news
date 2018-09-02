@@ -9,6 +9,7 @@ requests = "*"
 google-api-python-client = "*"
 "oauth2client" = "*"
 apiclient = "*"
+"mecab-python3" = "*"
 
 [dev-packages]
 "autopep8" = "*"

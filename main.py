@@ -1,11 +1,15 @@
 from crawl import Crawl
 from googleapi import GoogleAPI
+from utils import Utils
 
-api = GoogleAPI()
-rows = api.get_values()
+if __name__ == '__main__':
 
-crawl = Crawl(rows)
-test_list = crawl.get_text()
+    api = GoogleAPI()
+    rows = api.get_values()
 
+    crawl = Crawl(rows)
+    text_list = crawl.get_text()
 
-print(test_list)
+    utils = Utils()
+    text_list = utils.to_words(text_list=text_list)
+    print(text_list)

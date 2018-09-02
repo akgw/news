@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "2c207b23b8758765d0f11213ea112dccc2665945c09878a483c3e12a2cee93fd"
+            "sha256": "727ea4172330579c035c7c4a3bbbb707ab109f8e9f707bce527c24b06251f6e4"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -89,6 +89,13 @@
             ],
             "version": "==2.7"
         },
+        "mecab-python3": {
+            "hashes": [
+                "sha256:1e1b8a34ac63686dcaac19d8eaa2e0c265b679379d10c60ef5c22f571c79ed00"
+            ],
+            "index": "pypi",
+            "version": "==0.7"
+        },
         "oauth2client": {
             "hashes": [
                 "sha256:bd3062c06f8b10c6ef7a890b22c2740e5f87d61b6e1f4b1c90d069cdfc9dadb5",
@@ -153,10 +160,10 @@
     "develop": {
         "autopep8": {
             "hashes": [
-                "sha256:2284d4ae2052fedb9f466c09728e30d2e231cfded5ffd7b1a20c34123fdc4ba4"
+                "sha256:655e3ee8b4545be6cfed18985f581ee9ecc74a232550ee46e9797b6fbf4f336d"
             ],
             "index": "pypi",
-            "version": "==1.3.5"
+            "version": "==1.4"
         },
         "pycodestyle": {
             "hashes": [
