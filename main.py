@@ -13,4 +13,4 @@ if __name__ == '__main__':
     utils = Utils()
     text_list = utils.tfidf(text_list=text_list)
 
-    print(text_list)
+    # text_list = utils.cos_similarity(text_list=text_list)

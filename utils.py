@@ -1,31 +1,42 @@
 import MeCab
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 
 class Utils:
 
     @staticmethod
     def split(text, to_stem=False):
-        tagger = MeCab.Tagger()  # 別のTaggerを使ってもいい
+        tagger = MeCab.Tagger('-d /usr/local/lib/mecab/dic/mecab-ipadic-neologd')
         mecab_result = tagger.parse(text)
         info_of_words = mecab_result.split('\n')
         words = []
         for info in info_of_words:
-            # macabで分けると、文の最後に’’が、その手前に'EOS'が来る
             if info == 'EOS' or info == '':
                 break
-                # info => 'な\t助詞,終助詞,*,*,*,*,な,ナ,ナ'
             info_elems = info.split(',')
-            # 6番目に、無活用系の単語が入る。もし6番目が'*'だったら0番目を入れる
+
+            # 名詞だけに絞る
+            word, part = info_elems[0].split("\t")
+            if part != "名詞":
+                continue
+
+            # 数字は除外
+            if word.isnumeric():
+                continue
+
+            # 非自立は除外
+            if info_elems[1] == '非自立':
+                continue
+
             if info_elems[6] == '*':
-                # info_elems[0] => 'ヴァンロッサム\t名詞'
                 words.append(info_elems[0][:-3])
                 continue
+
             if to_stem:
-                # 語幹に変換
                 words.append(info_elems[6])
                 continue
-            # 語をそのまま
+
             words.append(info_elems[0][:-3])
         return words
 
@@ -33,11 +44,39 @@ class Utils:
         return self.split(text=text, to_stem=True)
 
     def tfidf(self, text_list):
-        # analyzerは文字列を入れると文字列のlistが返る関数
         for url, text in text_list.items():
+
             vectorizer = TfidfVectorizer(
                 analyzer=self.to_stem, min_df=1, max_df=50)
-            tfidf = vectorizer.fit_transform(text["full_text"])
-            text_list[url]['tfidf'] = tfidf
+            tfidf_list = vectorizer.fit_transform(text['full_text'])
+
+            text_list[url]['tfidf'] = tfidf_list.toarray()[0]
+
+            # 単語ごとのtfidf値出力
+            tfidfs = tfidf_list.toarray()[0]
+            terms = vectorizer.get_feature_names()
+
+            for term in terms:
+                tfidf = tfidfs[terms.index(term)]
+                if tfidf > 0:
+                    print(term + ':' + str(tfidf))
 
         return text_list
+
+    # def cos_similarity(self, text_list):
+    #     documents = self.tfidf(text_list)
+    #
+    #     tag = list(text_list.keys())
+    #
+    #     cs_array = cosine_similarity(documents, documents)
+
+        # for i, cs_item in enumerate(cs_array):
+        #     print("[" + tag[i] + "]")
+        #     cs_dic = {}
+        #     for j, cs in enumerate(cs_item):
+        #         print(j)
+            #     if round(cs - 1.0, 5) != 0:
+            #         cs_dic[tag[j]] = cs
+            #
+            # for k, v in sorted(cs_dic.items(), key=lambda x:x[1], reverse=True):
+            #     print("\t" + k + " : " + str(v))

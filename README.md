@@ -26,3 +26,8 @@ packageの追加
 ```
 pipenv install beautifulsoup4
 ```
+
+mecabのインストール
+```
+https://www.saintsouth.net/blog/morphological-analysis-by-mecab-and-mecab-ipadic-neologd-and-python3/
+```
