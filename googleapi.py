@@ -6,6 +6,7 @@ from googleapiclient.discovery import build
 from oauth2client import client
 from oauth2client import tools
 from oauth2client.file import Storage
+import constants
 
 
 class GoogleAPI:
@@ -50,11 +51,12 @@ class GoogleAPI:
             print('Storing credentials to ' + credential_path)
         return credentials
 
-    def get_values(self):
+    def get_values(self, sheet_name):
         spreadsheet_id = "1LQ74GYE4lG5ZGcFv4sbrP1wHvidcksmulXW8H-PlLGw"
-        range_name = "C:C"
+        sheet = constants.sheet_dic[sheet_name]
+
         request = self.service.spreadsheets().values().get(
-            spreadsheetId=spreadsheet_id, range=range_name)
+            spreadsheetId=spreadsheet_id, range=sheet_name + '!' + sheet['range'])
         values = request.execute().get('values', [])
         # ヘッダ行除外
         values.pop(0)

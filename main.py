@@ -5,7 +5,9 @@ from utils import Utils
 if __name__ == '__main__':
 
     api = GoogleAPI()
-    rows = api.get_values()
+    rows = api.get_values('form')
+
+    agent = api.get_values('agent')
 
     crawl = Crawl(rows)
     text_list = crawl.get_text()

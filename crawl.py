@@ -15,7 +15,7 @@ class Crawl:
             if resp.status_code != 200:
                 print('指定したURLが存在しません url=' + url)
                 continue
-            soup = BeautifulSoup(resp.text, 'html.parser')
+            soup = BeautifulSoup(resp.content, 'html.parser')
             self.extract_tag(soup, 'script')
             self.extract_tag(soup, 'style')
 
