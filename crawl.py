@@ -4,12 +4,9 @@ import re
 
 
 class Crawl:
-    def __init__(self, rows):
-        self.rows = rows
-
-    def get_text(self):
+    def get_text(self, rows):
         text_list = {}
-        for row in self.rows:
+        for row in rows:
             [url] = row
             resp = requests.get(url)
             if resp.status_code != 200:
@@ -26,7 +23,6 @@ class Crawl:
             if url not in text_list:
                 text_list[url] = {}
 
-            # text_list[url]['full_text'] = ' '.join([s for s in text if ('。' in s)])
             text_list[url]['full_text'] = [s for s in text if ('。' in s)]
 
         return text_list

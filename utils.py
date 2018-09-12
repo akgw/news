@@ -1,6 +1,6 @@
 import MeCab
 from sklearn.feature_extraction.text import TfidfVectorizer
-# from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics.pairwise import cosine_similarity
 
 
 class Utils:
@@ -54,7 +54,11 @@ class Utils:
             vectorizer = TfidfVectorizer(
                 analyzer=self.to_stem, min_df=1, max_df=50)
             tfidf_list = vectorizer.fit_transform(text['full_text'])
-            text_list[url]['tfidf'] = tfidf_list.toarray()[0]
+            text_list[url]['vectorizer'] = vectorizer
+            text_list[url]['tfidf'] = tfidf_list.toarray()
+            # text_list[url]['tfidf'] = tfidf_list.toarray()[0]
+
+            continue
 
             # 単語ごとのtfidf値出力
             print('対象URL:' + str(url))
@@ -68,20 +72,10 @@ class Utils:
 
         return text_list
 
-    # def cos_similarity(self, text_list):
-    #     documents = self.tfidf(text_list)
-    #
-    #     tag = list(text_list.keys())
-    #
-    #     cs_array = cosine_similarity(documents, documents)
-
-        # for i, cs_item in enumerate(cs_array):
-        #     print("[" + tag[i] + "]")
-        #     cs_dic = {}
-        #     for j, cs in enumerate(cs_item):
-        #         print(j)
-        #     if round(cs - 1.0, 5) != 0:
-        #         cs_dic[tag[j]] = cs
-        #
-        # for k, v in sorted(cs_dic.items(), key=lambda x:x[1], reverse=True):
-        #     print("\t" + k + " : " + str(v))
+    def cos_similarity(self, text_list, agent_list):
+        for url, text in text_list.items():
+            for agent_url, agent_text in agent_list.items():
+                agent_tfidf = text['vectorizer'].transform(
+                    agent_text['full_text'])
+                cos = cosine_similarity(text['tfidf'], agent_tfidf.toarray())
+                print(url + 'と' + agent_url + 'のcos類似度は' + str(cos))

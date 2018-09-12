@@ -4,7 +4,7 @@ sheet_dic = {
         # 'gid': '2069059734',
     },
     'agent': {
-        'range': 'A:B',
+        'range': 'B:B',
         # 'gid': '1710537894',
     }
 }
