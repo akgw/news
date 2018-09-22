@@ -26,7 +26,8 @@ class Crawl:
             if url not in text_list:
                 text_list[url] = {}
 
-            text_list[url]['full_text'] = [s for s in text if ('。' in s)]
+            text_list[url]['full_text'] = ''.join(
+                [s for s in text if ('。' in s)])
 
         return text_list
 

@@ -15,3 +15,5 @@ if __name__ == '__main__':
 
     text_list = utils.cos_similarity(
         text_list=text_list, agent_list=agent_list)
+
+    print(text_list)
