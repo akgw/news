@@ -1,6 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+import urllib3
+from urllib3.exceptions import InsecureRequestWarning
+urllib3.disable_warnings(InsecureRequestWarning)
 
 
 class Crawl:
@@ -8,7 +11,7 @@ class Crawl:
         text_list = {}
         for row in rows:
             [url] = row
-            resp = requests.get(url)
+            resp = requests.get(url, verify=False)
             if resp.status_code != 200:
                 print('指定したURLが存在しません url=' + url)
                 continue
