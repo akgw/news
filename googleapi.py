@@ -58,6 +58,17 @@ class GoogleAPI:
         request = self.service.spreadsheets().values().get(
             spreadsheetId=spreadsheet_id, range=sheet_name + '!' + sheet['range'])
         values = request.execute().get('values', [])
-        # ヘッダ行除外
+
         values.pop(0)
-        return values
+        ret_value = []
+        for value in values:
+            if len(value) != len(sheet['map']):
+                print(str(value) + 'is not enough value')
+                continue
+
+            v = {}
+            for index, key in sheet['map'].items():
+                v[key] = value[index]
+            ret_value.append(v)
+
+        return ret_value

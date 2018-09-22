@@ -10,8 +10,8 @@ class Crawl:
     def get_text(self, rows):
         text_list = {}
         for row in rows:
-            [url] = row
-            resp = requests.get(url, verify=False)
+            url = row['url']
+            resp = requests.get(row['url'], verify=False)
             if resp.status_code != 200:
                 print('指定したURLが存在しません url=' + url)
                 continue

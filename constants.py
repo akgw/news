@@ -1,10 +1,15 @@
 sheet_dic = {
     'form': {
-        'range': 'C:C',
-        # 'gid': '2069059734',
+        'range': 'C:D',
+        'map': {
+            0: 'url',
+            1: 'gender'
+        }
     },
     'agent': {
         'range': 'B:B',
-        # 'gid': '1710537894',
-    }
+        'map': {
+            0: 'url'
+        }
+    },
 }
