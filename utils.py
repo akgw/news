@@ -1,7 +1,6 @@
 import MeCab
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-import numpy as np
 
 
 class Utils:
@@ -58,17 +57,17 @@ class Utils:
             text_list[url]['vectorizer'] = vectorizer
             text_list[url]['tfidf'] = tfidf_list.toarray()
 
-            continue
-
-            # 単語ごとのtfidf値出力
-            print('対象URL:' + str(url))
-            tfidfs = tfidf_list.toarray()[0]
-            terms = vectorizer.get_feature_names()
-
-            for term in terms:
-                tfidf = tfidfs[terms.index(term)]
-                if tfidf > 0:
-                    print(term + ':' + str(tfidf))
+            # continue
+            #
+            # # 単語ごとのtfidf値出力
+            # print('対象URL:' + str(url))
+            # tfidfs = tfidf_list.toarray()[0]
+            # terms = vectorizer.get_feature_names()
+            #
+            # for term in terms:
+            #     tfidf = tfidfs[terms.index(term)]
+            #     if tfidf > 0:
+            #         print(term + ':' + str(tfidf))
 
         return text_list
 
@@ -83,9 +82,9 @@ class Utils:
             agent_tfidf = text['vectorizer'].transform(agent_text_list)
             cos = cosine_similarity(text['tfidf'], agent_tfidf)
             # 類似順に取得
-            agent_rank = []
-            for id in cos.argsort()[0][::-1]:
-                agent_rank.append(agent_url_list[id])
-            text_list[url]['agent_rank'] = agent_rank
+            news_rank = []
+            for index in cos.argsort()[0][::-1]:
+                news_rank.append(agent_url_list[index])
+            text_list[url]['news_rank'] = news_rank
 
         return text_list
