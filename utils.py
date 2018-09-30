@@ -50,12 +50,12 @@ class Utils:
         return self.split(text=text, to_stem=True)
 
     def tfidf(self, text_list):
-        for url, text in text_list.items():
+        for column_index, text in text_list.items():
             vectorizer = TfidfVectorizer(
                 analyzer=self.to_stem, min_df=1, max_df=50)
             tfidf_list = vectorizer.fit_transform([text['full_text']])
-            text_list[url]['vectorizer'] = vectorizer
-            text_list[url]['tfidf'] = tfidf_list.toarray()
+            text_list[column_index]['vectorizer'] = vectorizer
+            text_list[column_index]['tfidf'] = tfidf_list.toarray()
 
             # continue
             #
@@ -73,18 +73,18 @@ class Utils:
 
     def cos_similarity(self, text_list, agent_list):
         agent_text_list = []
-        agent_url_list = []
-        for agent_url, agent_text in agent_list.items():
+        agent_name_list = []
+        for agent_text in agent_list.values():
             agent_text_list.append(agent_text['full_text'])
-            agent_url_list.append(agent_url)
+            agent_name_list.append(agent_text['name'])
 
-        for url, text in text_list.items():
+        for column_index, text in text_list.items():
             agent_tfidf = text['vectorizer'].transform(agent_text_list)
             cos = cosine_similarity(text['tfidf'], agent_tfidf)
             # 類似順に取得
             news_rank = []
             for index in cos.argsort()[0][::-1]:
-                news_rank.append(agent_url_list[index])
-            text_list[url]['news_rank'] = news_rank
+                news_rank.append(agent_name_list[index])
+            text_list[column_index]['news_rank'] = news_rank
 
         return text_list

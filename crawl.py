@@ -23,12 +23,10 @@ class Crawl:
             text = ' '.join(text.splitlines())
             text = re.split(" +", text)
 
-            if url not in text_list:
-                text_list[url] = {}
-
-            text_list[url] = row
-            text_list[url]['full_text'] = ''.join(
+            row['full_text'] = ''.join(
                 [s for s in text if ('。' in s)])
+
+            text_list[row['column_index']] = row
 
         return text_list
 
