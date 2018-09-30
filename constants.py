@@ -9,7 +9,8 @@ sheet_dic = {
             4: 'latest_job_category',
             5: 'salary',
             6: 'interest',
-        }
+        },
+        'output_range': 'K'
     },
     'agent': {
         'range': 'A:H',
@@ -22,7 +23,7 @@ sheet_dic = {
             5: 'latest_job_category',
             6: 'salary',
             7: 'interest',
-        }
+        },
     },
 }
 

@@ -11,9 +11,10 @@ import constants
 
 class GoogleAPI:
 
-    SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly'
+    SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
     CLIENT_SECRET_FILE = 'client_secret.json'
     APPLICATION_NAME = 'Google Sheets API Python Quickstart'
+    SPREAD_SHEET_ID = '1LQ74GYE4lG5ZGcFv4sbrP1wHvidcksmulXW8H-PlLGw'
 
     def __init__(self):
         try:
@@ -52,16 +53,15 @@ class GoogleAPI:
         return credentials
 
     def get_values(self, sheet_name):
-        spreadsheet_id = "1LQ74GYE4lG5ZGcFv4sbrP1wHvidcksmulXW8H-PlLGw"
         sheet = constants.sheet_dic[sheet_name]
 
         request = self.service.spreadsheets().values().get(
-            spreadsheetId=spreadsheet_id, range=sheet_name + '!' + sheet['range'])
+            spreadsheetId=self.SPREAD_SHEET_ID, range=sheet_name + '!' + sheet['range'])
         values = request.execute().get('values', [])
 
         values.pop(0)
         ret_value = []
-        for value in values:
+        for column_index, value in enumerate(values):
             if len(value) != len(sheet['map']):
                 print(str(value) + 'is not enough value')
                 continue
@@ -69,6 +69,27 @@ class GoogleAPI:
             v = {}
             for index, key in sheet['map'].items():
                 v[key] = value[index]
+
+            v['column_index'] = column_index + 2  # popしているため2から開始
             ret_value.append(v)
 
         return ret_value
+
+    def set_values(self, sheet_name, text_list):
+        sheet = constants.sheet_dic[sheet_name]
+
+        for value in text_list.values():
+            target = sheet_name + '!' + \
+                sheet['output_range'] + str(value['column_index'])
+
+            body = {
+                'values': [
+                    [
+                        str(sorted(value['point'].items(),
+                                   key=lambda x: -x[1]))
+                    ],
+                ]
+            }
+
+            self.service.spreadsheets().values().update(
+                spreadsheetId=self.SPREAD_SHEET_ID, valueInputOption='RAW', range=target, body=body).execute()

@@ -23,4 +23,4 @@ if __name__ == '__main__':
     text_list = matching.execute(
         text_list=text_list, agent_list=agent_list)
 
-    pprint.pprint(text_list)
+    api.set_values(sheet_name='form', text_list=text_list)

@@ -9,7 +9,7 @@ class Matching:
         return text_list
 
     def calc_point(self, text, agent_list):
-        point_list = []
+        point_list = {}
         for agent_url, agent in agent_list.items():
             point_sum = 0
             point_sum += self.calc_news_point(text['news_rank'], agent_url)
@@ -19,9 +19,7 @@ class Matching:
                     continue
                 point_sum += point
 
-            point_list.append({
-                agent['name']: point_sum
-            })
+            point_list[agent['name']] = point_sum
 
         return point_list
 
