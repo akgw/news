@@ -1,38 +1,19 @@
-import requests
-from bs4 import BeautifulSoup
-import re
-import urllib3
-from urllib3.exceptions import InsecureRequestWarning
-urllib3.disable_warnings(InsecureRequestWarning)
+from lib.crawl import CrawlLib
 
 
-class Crawl:
+class CrawlService:
+    def __init__(self):
+        self.crawl = CrawlLib()
+
     def execute(self, rows):
         text_list = {}
         for row in rows:
-            url = row['url']
-            resp = requests.get(row['url'], verify=False)
-            if resp.status_code != 200:
-                print('指定したURLが存在しません url=' + url)
+            text = self.crawl.execute(row['url'])
+            if text is None:
+                print('指定したURLが存在しません url=' + row['url'])
                 continue
 
-            soup = BeautifulSoup(resp.content, 'html.parser')
-            self.__extract_tag(soup, 'script')
-            self.__extract_tag(soup, 'style')
-
-            body = soup.find('body').get_text()
-            text = ' '.join(body.splitlines())
-            text = re.split(" +", text)
-
-            row['full_text'] = ''.join(
-                [s for s in text if ('。' in s)])
-
+            row['full_text'] = text
             text_list[row['column_index']] = row
 
         return text_list
-
-    @staticmethod
-    def __extract_tag(soup, tag_name):
-        script = soup(tag_name)
-        for tag in script:
-            tag.extract()
