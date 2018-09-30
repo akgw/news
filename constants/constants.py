@@ -1,3 +1,4 @@
+# スプレットシートの定義
 sheet_dic = {
     'form': {
         'range': 'C:I',
@@ -27,6 +28,7 @@ sheet_dic = {
     },
 }
 
+# 各項目ごとの配点
 points_dic = {
     'gender': 1,
     'age': 1,
@@ -36,6 +38,7 @@ points_dic = {
     'interest': 0.06,
 }
 
+# ニュースデータの順位配点
 points_news_dic = {
     1: 1,
     2: 0.5,

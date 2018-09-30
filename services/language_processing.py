@@ -3,7 +3,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 
-class Utils:
+class LanguageProcessingService:
 
     @staticmethod
     def split(text, to_stem=False):
@@ -71,7 +71,8 @@ class Utils:
 
         return text_list
 
-    def cos_similarity(self, text_list, agent_list):
+    @staticmethod
+    def cos_similarity(text_list, agent_list):
         agent_text_list = []
         agent_name_list = []
         for agent_text in agent_list.values():

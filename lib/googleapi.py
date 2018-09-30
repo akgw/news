@@ -6,7 +6,7 @@ from googleapiclient.discovery import build
 from oauth2client import client
 from oauth2client import tools
 from oauth2client.file import Storage
-import constants
+from constants import constants
 
 
 class GoogleAPI:

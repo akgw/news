@@ -7,7 +7,7 @@ urllib3.disable_warnings(InsecureRequestWarning)
 
 
 class Crawl:
-    def get_text(self, rows):
+    def execute(self, rows):
         text_list = {}
         for row in rows:
             url = row['url']
@@ -15,12 +15,13 @@ class Crawl:
             if resp.status_code != 200:
                 print('指定したURLが存在しません url=' + url)
                 continue
-            soup = BeautifulSoup(resp.content, 'html.parser')
-            self.extract_tag(soup, 'script')
-            self.extract_tag(soup, 'style')
 
-            text = soup.find('body').get_text()
-            text = ' '.join(text.splitlines())
+            soup = BeautifulSoup(resp.content, 'html.parser')
+            self.__extract_tag(soup, 'script')
+            self.__extract_tag(soup, 'style')
+
+            body = soup.find('body').get_text()
+            text = ' '.join(body.splitlines())
             text = re.split(" +", text)
 
             row['full_text'] = ''.join(
@@ -31,7 +32,7 @@ class Crawl:
         return text_list
 
     @staticmethod
-    def extract_tag(soup, tag_name):
+    def __extract_tag(soup, tag_name):
         script = soup(tag_name)
         for tag in script:
             tag.extract()
