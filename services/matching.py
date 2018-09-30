@@ -1,13 +1,24 @@
 import constants
+from services.agents import AgentsService
+from services.job_seekers import JobSeekersService
 
 
 class Matching:
-    def execute(self, text_list, agent_list):
-        for key, text in text_list.items():
-            text_list[key]['point'] = self.calc_point(text, agent_list)
 
-        return text_list
+    # メインのマッチングロジック
+    def execute(self):
+        agents_service = AgentsService()
+        agent_list = agents_service.get()
 
+        job_seekers_service = JobSeekersService(agent_list)
+        job_seekers = job_seekers_service.get()
+
+        for key, text in job_seekers.items():
+            job_seekers[key]['point'] = self.calc_point(text, agent_list)
+
+        job_seekers_service.update(job_seekers)
+
+    # 配点
     def calc_point(self, text, agent_list):
         point_list = {}
         for agent_url, agent in agent_list.items():
@@ -23,6 +34,7 @@ class Matching:
 
         return point_list
 
+    # 順位付けされている項目の配点
     @staticmethod
     def calc_news_point(news_rank, agent_url):
         for url in news_rank:
