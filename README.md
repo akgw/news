@@ -99,7 +99,7 @@ $ ls /usr/local/lib/mecab/dic/
 ├── lib
 │   ├── crawl.py
 │   ├── googleapi.py
-│   └── tfidfvectorizer.py
+│   └── sklearn.py
 ├── main.py
 ├── repositories
 │   ├── agents.py

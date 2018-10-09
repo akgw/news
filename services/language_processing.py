@@ -1,15 +1,15 @@
-from lib.tfidfvectorizer import TfidfVectorizerLib
+from lib.sklearn import SklearnLib
 
 
 class LanguageProcessingService:
 
     def __init__(self):
-        self.tfidfvectorizer = TfidfVectorizerLib()
+        self.sklearn = SklearnLib()
 
     # tfidf値を取得
     def append_tfidf(self, text_list):
         for column_index, text in text_list.items():
-            text_list[column_index]['tfidf'] = self.tfidfvectorizer.calc_tfidf(
+            text_list[column_index]['tfidf'] = self.sklearn.calc_tfidf(
                 text=text['full_text'])
 
         return text_list
@@ -23,7 +23,7 @@ class LanguageProcessingService:
             agent_name_list.append(agent_text['name'])
 
         for column_index, text in text_list.items():
-            cos = self.tfidfvectorizer.calc_cos_similarity(
+            cos = self.sklearn.calc_cos_similarity(
                 agent_text_list=agent_text_list, tfidf=text['tfidf'])
 
             # 類似順に取得

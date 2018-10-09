@@ -3,20 +3,19 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 
-class TfidfVectorizerLib:
+class SklearnLib:
 
     def __init__(self):
         self.vectorizer = TfidfVectorizer(
             analyzer=self.__to_stem, min_df=1, max_df=50)
+        self.tagger = MeCab.Tagger(
+            '-d /usr/local/lib/mecab/dic/mecab-ipadic-neologd')
 
     def __to_stem(self, text):
         return self.__split(text=text, to_stem=True)
 
-    @staticmethod
-    def __split(text, to_stem=False):
-        tagger = MeCab.Tagger(
-            '-d /usr/local/lib/mecab/dic/mecab-ipadic-neologd')
-        mecab_result = tagger.parse(text)
+    def __split(self, text, to_stem=False):
+        mecab_result = self.tagger.parse(text)
         info_of_words = mecab_result.split('\n')
         words = []
         for info in info_of_words:
