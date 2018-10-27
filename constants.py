@@ -1,29 +1,25 @@
 # スプレットシートの定義
 sheet_dic = {
     'form': {
-        'range': 'C:I',
+        'range': 'C:G',
         'map': {
-            0: 'url',
-            1: 'gender',
-            2: 'age',
-            3: 'latest_industry',
-            4: 'latest_job_category',
-            5: 'salary',
-            6: 'interest',
+            0: 'gender',
+            1: 'salary',
+            2: 'latest_job_category',
+            3: 'interest',
+            4: 'url',
         },
-        'output_range': 'K'
+        'output_range': 'H'
     },
     'agent': {
-        'range': 'A:H',
+        'range': 'A:F',
         'map': {
             0: 'name',
             1: 'url',
             2: 'gender',
-            3: 'age',
-            4: 'latest_industry',
-            5: 'latest_job_category',
-            6: 'salary',
-            7: 'interest',
+            3: 'salary',
+            4: 'latest_job_category',
+            5: 'interest',
         },
     },
 }
@@ -31,10 +27,8 @@ sheet_dic = {
 # 各項目ごとの配点
 points_dic = {
     'gender': 1,
-    'age': 1,
-    'latest_industry': 1,
-    'latest_job_category': 1,
     'salary': 1,
+    'latest_job_category': 1,
     'interest': 0.06,
 }
 
