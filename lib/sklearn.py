@@ -6,8 +6,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 class SklearnLib:
 
     def __init__(self):
-        self.vectorizer = TfidfVectorizer(
-            analyzer=self.__to_stem, min_df=1, max_df=50)
         self.tagger = MeCab.Tagger(
             '-d /usr/local/lib/mecab/dic/mecab-ipadic-neologd')
 
@@ -54,9 +52,16 @@ class SklearnLib:
 
     # 対象textのtfidf値を取得
     def calc_tfidf(self, text):
-        return self.vectorizer.fit_transform([text]).toarray()
+        vectorizer = TfidfVectorizer(
+            analyzer=self.__to_stem, min_df=1, max_df=50)
+
+        return {
+            'tfidf': vectorizer.fit_transform([text]).toarray(),
+            'vectorizer': vectorizer
+        }
 
     # agent_text_listと対象のtextのcos類似度を取得
-    def calc_cos_similarity(self, agent_text_list, tfidf):
-        agent_tfidf = self.vectorizer.transform(agent_text_list)
+    def calc_cos_similarity(self, agent_text_list, tfidf, vectorizer):
+        agent_tfidf = vectorizer.transform(agent_text_list)
+
         return cosine_similarity(tfidf, agent_tfidf)
