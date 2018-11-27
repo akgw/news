@@ -33,7 +33,7 @@ class Matching:
                             continue
                         point_sum += point
 
-            point_list[agent['name']] = point_sum
+            point_list[agent['name']] = round(point_sum, 4)
 
         return point_list
 
