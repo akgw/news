@@ -27,9 +27,11 @@ class Matching:
                 point_sum += self.calc_news_point(text['news_rank'], agent_url)
 
             for content, point in constants.points_dic.items():
-                if text[content] != agent[content]:
-                    continue
-                point_sum += point
+                for seeker_answer in text[content].split(','):
+                    for agent_answer in agent[content].split(','):
+                        if seeker_answer != agent_answer:
+                            continue
+                        point_sum += point
 
             point_list[agent['name']] = point_sum
 
