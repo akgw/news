@@ -24,7 +24,7 @@ class Matching:
         for agent_url, agent in agent_list.items():
             point_sum = 0
             if 'news_rank' in text:
-                point_sum += self.calc_news_point(text['news_rank'], agent_url)
+                point_sum += self.calc_news_point(text['news_rank'], agent)
 
             for content, point in constants.points_dic.items():
                 for seeker_answer in text[content].split(','):
@@ -39,10 +39,10 @@ class Matching:
 
     # 順位付けされている項目の配点
     @staticmethod
-    def calc_news_point(news_rank, agent_url):
-        for url in news_rank:
-            rank = news_rank.index(url) + 1
-            if agent_url == url:
+    def calc_news_point(news_rank, agent):
+        for agent_name in news_rank:
+            rank = news_rank.index(agent_name) + 1
+            if agent_name == agent['name']:
                 try:
                     return constants.points_news_dic[rank]
                 except:

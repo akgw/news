@@ -12,8 +12,10 @@ class LanguageProcessingService:
             if text['full_text'] == '':
                 continue
 
-            text_list[column_index]['tfidf'] = self.sklearn.calc_tfidf(
+            result = self.sklearn.calc_tfidf(
                 text=text['full_text'])
+            text_list[column_index]['tfidf'] = result['tfidf']
+            text_list[column_index]['vectorizer'] = result['vectorizer']
 
         return text_list
 
@@ -30,7 +32,7 @@ class LanguageProcessingService:
                 continue
 
             cos = self.sklearn.calc_cos_similarity(
-                agent_text_list=agent_text_list, tfidf=text['tfidf'])
+                agent_text_list=agent_text_list, tfidf=text['tfidf'], vectorizer=text['vectorizer'])
 
             # 類似順に取得
             news_rank = []
