@@ -23,7 +23,8 @@ class Matching:
         point_list = {}
         for agent_url, agent in agent_list.items():
             point_sum = 0
-            point_sum += self.calc_news_point(text['news_rank'], agent_url)
+            if 'news_rank' in text:
+                point_sum += self.calc_news_point(text['news_rank'], agent_url)
 
             for content, point in constants.points_dic.items():
                 if text[content] != agent[content]:

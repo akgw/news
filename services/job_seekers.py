@@ -14,6 +14,7 @@ class JobSeekersService:
     # 求職者の情報を取得
     def get(self):
         job_seekers = self.job_seekers_repository.get()
+
         job_seekers = self.__append_tfidf(self.crawl.execute(job_seekers))
         return self.__append_cos_similarity(job_seekers)
 

@@ -9,6 +9,9 @@ class LanguageProcessingService:
     # tfidf値を取得
     def append_tfidf(self, text_list):
         for column_index, text in text_list.items():
+            if text['full_text'] == '':
+                continue
+
             text_list[column_index]['tfidf'] = self.sklearn.calc_tfidf(
                 text=text['full_text'])
 
@@ -23,6 +26,9 @@ class LanguageProcessingService:
             agent_name_list.append(agent_text['name'])
 
         for column_index, text in text_list.items():
+            if 'tfidf' not in text:
+                continue
+
             cos = self.sklearn.calc_cos_similarity(
                 agent_text_list=agent_text_list, tfidf=text['tfidf'])
 
