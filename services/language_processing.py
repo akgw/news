@@ -16,6 +16,9 @@ class LanguageProcessingService:
                 text=text['full_text'])
             text_list[column_index]['tfidf'] = result['tfidf']
             text_list[column_index]['vectorizer'] = result['vectorizer']
+            dict1 = dict(zip(result['vectorizer'].get_feature_names(),result['tfidf'][0]))
+            sorted_keys1 = sorted(dict1, reverse = True)
+            text_list[column_index]['tfidf_words'] = sorted_keys1[:15]
 
         return text_list
 
@@ -30,7 +33,6 @@ class LanguageProcessingService:
         for column_index, text in text_list.items():
             if 'tfidf' not in text:
                 continue
-
             cos = self.sklearn.calc_cos_similarity(
                 agent_text_list=agent_text_list, tfidf=text['tfidf'], vectorizer=text['vectorizer'])
 

@@ -13,7 +13,7 @@ class GoogleAPILib:
     SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
     CLIENT_SECRET_FILE = 'client_secret.json'
     APPLICATION_NAME = 'Google Sheets API Python Quickstart'
-    SPREAD_SHEET_ID = '1LQ74GYE4lG5ZGcFv4sbrP1wHvidcksmulXW8H-PlLGw'
+    SPREAD_SHEET_ID = '1SCxY44VDXzqhrgkquOtaHFWOUDWowVWGeiBU8q6luJg'
 
     def __init__(self):
         try:

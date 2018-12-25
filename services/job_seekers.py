@@ -27,3 +27,7 @@ class JobSeekersService:
     # 求職者の情報を更新
     def update(self, job_seekers):
         return self.job_seekers_repository.update(job_seekers)
+
+    # 求職者の指定したニュースのTFIDFが高い単語情報を付加
+    def update_tfidf_words(self, job_seekers):
+        return self.job_seekers_repository.update_tfidf_words(job_seekers)

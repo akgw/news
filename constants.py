@@ -9,7 +9,8 @@ sheet_dic = {
             3: 'interest',
             4: 'url',
         },
-        'output_range': 'H'
+        'output_range': 'H',
+        'tfidf_words_range': 'I'
     },
     'agent': {
         'range': 'A:F',
