@@ -17,6 +17,7 @@ class Matching:
             job_seekers[key]['point'] = self.calc_point(text, agent_list)
 
         job_seekers_service.update(job_seekers)
+        job_seekers_service.update_tfidf_words(job_seekers)
 
     # 配点
     def calc_point(self, text, agent_list):

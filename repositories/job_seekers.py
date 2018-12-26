@@ -21,10 +21,10 @@ class JobSeekersRepository:
     # 求職者の情報を更新する
     def update(self, job_seekers):
         for value in job_seekers.values():
-            target = self.sheet_name + '!' + \
+            evaluation_target = self.sheet_name + '!' + \
                 self.sheet['output_range'] + str(value['column_index'])
 
-            body = {
+            evaluation_body = {
                 'values': [
                     [
                         str(sorted(value['point'].items(),
@@ -33,4 +33,20 @@ class JobSeekersRepository:
                 ]
             }
 
-            self.api.update_values(target, body)
+            self.api.update_values(evaluation_target, evaluation_body)
+
+    # 求職者の指定したニュースのTFIDFが高い単語を付加
+    def update_tfidf_words(self, job_seekers):
+        for value in job_seekers.values():
+            tfidf_words_target = self.sheet_name + '!' + \
+                self.sheet['tfidf_words_range'] + str(value['column_index'])
+
+            tfidf_words_body = {
+                'values': [
+                    [
+                         str(value['tfidf_words'])
+                    ],
+                ]
+            }
+
+            self.api.update_values(tfidf_words_target, tfidf_words_body)
