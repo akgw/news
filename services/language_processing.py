@@ -9,6 +9,8 @@ class LanguageProcessingService:
     # tfidf値を取得
     def append_tfidf(self, text_list):
         for column_index, text in text_list.items():
+            text_list[column_index]['tfidf_words'] = ''
+
             if text['full_text'] == '':
                 continue
 
@@ -16,9 +18,12 @@ class LanguageProcessingService:
                 text=text['full_text'])
             text_list[column_index]['tfidf'] = result['tfidf']
             text_list[column_index]['vectorizer'] = result['vectorizer']
+
+            # ニュースがある場合はTFIDFが高い単語を15個格納
             dict1 = dict(zip(result['vectorizer'].get_feature_names(),result['tfidf'][0]))
             sorted_keys1 = sorted(dict1, reverse = True)
             text_list[column_index]['tfidf_words'] = sorted_keys1[:15]
+
 
         return text_list
 
