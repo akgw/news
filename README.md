@@ -13,8 +13,16 @@ eval "$(pyenv init -)"
 
 ## pyenvでのpythonのインストール
 ```
-pyenv install 3.6.5
-pyenv global 3.6.5
+pyenv install 3.7.0
+pyenv global 3.7.0
+```
+
+## python3.7.0であることを確認
+```
+> pyenv versions
+  system
+  3.6.5
+* 3.7.0
 ```
 
 ## pipenvのインストール
