@@ -19,7 +19,7 @@ httplib2 = "*"
 "autopep8" = "*"
 
 [requires]
-python_version = "3.6.5"
+python_version = "3.7"
 
 [scripts]
 start = "python main.py"
